@@ -1,0 +1,7 @@
+[user]
+	name = Javier Gómez Fernández
+	email = javigofe@gmail.com
+[core]
+	editor = vim -f
+[web]
+	browser = firefox
