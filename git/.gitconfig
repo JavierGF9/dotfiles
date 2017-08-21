@@ -1,0 +1,7 @@
+[user]
+	name = CHANGEME
+	email = CHANGEME
+[core]
+	editor = vim -f
+[web]
+	browser = firefox
