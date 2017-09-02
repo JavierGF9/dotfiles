@@ -38,12 +38,8 @@ then
     export TERM="xterm-256color"
 fi
 
-if [ -f /usr/share/git/git-prompt.sh ]
-then
-    . /usr/share/git/git-prompt.sh
-    export GIT_PS1_SHOWCOLORHINTS=1
-    export GIT_PS1_SHOWDIRTYSTATE=1
-fi
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -93,4 +89,8 @@ if ! shopt -oq posix; then
 fi
 
 #export PS1="[\u@\h] \W\$ "
-export PS1='[\t] \[\e[0;32m\]\u\[\e[m\]@\[\e[0;37m\]\h\[\e[m\]\r\n\[\e[1;34m\]\W\[\e[m\]$(__git_ps1 " (%s)") \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] '
+#export PS1='[\t] \[\e[0;32m\]\u\[\e[m\]@\[\e[0;37m\]\h\[\e[m\]\r\n\[\e[1;34m\]\W\[\e[m\]$(__git_ps1 " (%s)") \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] '
+export PROMPT_COMMAND='__git_ps1 "[\t] $(tput setaf 2)\u$(tput sgr0)@$(tput dim)\h$(tput sgr0)\r\n$(tput setaf 4)\W$(tput sgr0)" " \[\e[1;32m\]\$\[\e[m\]\[\e[1;37m\] "'
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
