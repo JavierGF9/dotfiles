@@ -108,3 +108,9 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 " Keep selection after nesting
 vnoremap > >gv
 vnoremap < <gv
+
+" Spotivim
+nnoremap <C-h> :SpPrevious<CR>
+nnoremap <C-l> :SpNext<CR>
+inoremap <C-h> <Esc>:SpPrevious<CR>gi
+inoremap <C-l> <Esc>:SpNext<CR>gi

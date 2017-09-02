@@ -1,5 +1,7 @@
 alias cobc='cobc -Wall -std=cobol85'
-alias firefox='env GTK_THEME=Adwaita firefox'
 alias icegridgui='java -jar /usr/share/java/zeroc-ice/icegridgui.jar'
-alias ls='ls --color=auto'
 alias yt-audio='mpv --no-video'
+
+alias gco='git checkout'
+alias gst='git status'
+alias gd='git diff'
