@@ -1,16 +1,28 @@
 set nocompatible
-
-" Pathogen
 let mapleader = ","
 
-execute pathogen#infect()
-execute pathogen#helptags()
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+Plug 'ervandew/supertab'
+Plug 'JavierGF9/spotivim'
+Plug 'kien/ctrlp.vim'
+Plug 'mbbill/undotree'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-syntastic/syntastic'
+call plug#end()
 
 syntax on
-filetype plugin indent on
+filetype on
+filetype indent on
+filetype plugin on
 
 set novisualbell
 set showbreak=↪
+set linebreak
 set writebackup
 
 " Status bar (always shown)
@@ -33,6 +45,7 @@ endif
 " Theme
 if has("gui_running")
   colorscheme autumn
+  set guifont=Hack
 else
   if &t_Co == 256
     colorscheme mojave
@@ -46,6 +59,7 @@ set swapfile
 set directory=$HOME/.vim/swp
 
 " Better searchs
+set ignorecase
 set incsearch
 set hlsearch
 nnoremap <F3> :noh<CR>
@@ -114,3 +128,11 @@ nnoremap <C-h> :SpPrevious<CR>
 nnoremap <C-l> :SpNext<CR>
 inoremap <C-h> <Esc>:SpPrevious<CR>gi
 inoremap <C-l> <Esc>:SpNext<CR>gi
+vnoremap <C-h> <Esc>:SpPrevious<CR>gv
+vnoremap <C-l> <Esc>:SpNext<CR>gv
+
+" Ruby indentation
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+
+" TagList
+nnoremap <leader><Tab> :TlistToggle<CR>

@@ -1,6 +1,7 @@
 # Files and modules of Pathogen
 vim/.vim/bundle/
+vim/.vim/plugged/
 vim/.vim/autoload/
 
 # Swap-files folder of Vim
-vim/.vim/swp/*
+vim/.vim/swp/
