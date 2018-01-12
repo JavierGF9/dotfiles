@@ -28,14 +28,14 @@ fi
 
 # Configuración del DevKitPro
 if [ -d "$HOME/devkitPro" ] ; then
-	export DEVKITPRO=/home/javier/devkitPro
+	export DEVKITPRO=$HOME/devkitPro
 	export DEVKITARM=${DEVKITPRO}/devkitARM
 	export PATH=${PATH}:${DEVKITARM}/bin
 fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
+# Programas necesarios para Rust
+[ -d "$HOME/.cargo" ] && export PATH="$HOME/.cargo/bin:$PATH"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

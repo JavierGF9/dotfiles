@@ -3,4 +3,5 @@
 # with LightDM in Debian.
 # NOTE: probably should source ".xprofile" instead of ".profile"
 
-[ -f "$HOME/.profile" ] && . "$HOME/.profile"
+[ -r "$HOME/.xprofile" ] && . "$HOME/.xprofile"
+[ -r "$HOME/.profile" ] && . "$HOME/.profile"
