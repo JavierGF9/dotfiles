@@ -13,6 +13,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-syntastic/syntastic'
+Plug 'tbastos/vim-lua'
+Plug 'vim-latex/vim-latex'
 call plug#end()
 
 syntax on
@@ -98,7 +100,7 @@ inoremap <C-S> <Esc>:%update<CR>li
 
 " NERDTree
 noremap <C-e> <Esc>:NERDTreeToggle<CR>
-nnoremap <Ñ> :NERDTreeToggle<CR>
+nnoremap Ñ :NERDTreeToggle<CR>
 
 " NERDCommenter
 nmap ñ <Plug>NERDCommenterInvert
@@ -132,7 +134,33 @@ vnoremap <C-h> <Esc>:SpPrevious<CR>gv
 vnoremap <C-l> <Esc>:SpNext<CR>gv
 
 " Ruby indentation
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType ruby setlocal expandtab shiftwidth=0 tabstop=2
+
+" Lua indentation
+autocmd FileType lua setlocal expandtab shiftwidth=0 tabstop=2
+
+" C indentation
+autocmd FileType c setlocal noexpandtab shiftwidth=0 tabstop=4
 
 " TagList
 nnoremap <leader><Tab> :TlistToggle<CR>
+
+" Tabs navigation
+nnoremap <F8> :tabNext<CR>
+nnoremap <S-F8> :tabprevious<CR>
+nnoremap <C-F8> :tabnew<CR>
+"nnoremap <C-S-F8> :tabclose<CR>
+
+" Buffers navigation
+nnoremap <F7> :bNext<CR>
+nnoremap <S-F7> :bprevious<CR>
+"nnoremap <C-F7> :sbNext<CR>
+"nnoremap <C-S-F7> :sbprevious<CR>
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+
+autocmd FileType tex setlocal shiftwidth=2
+autocmd FileType tex setlocal iskeyword+=:
