@@ -1,7 +1,7 @@
 # ~/.xsessionrc: sourced by Xsession when logging in a desktop environment
 # The only purpose of this file is to source ".profile" when logging in
 # with LightDM in Debian.
-# NOTE: probably should source ".xprofile" instead of ".profile"
+# NOTE: probably should only source ".xprofile" instead of ".profile"
 
 [ -r "$HOME/.xprofile" ] && . "$HOME/.xprofile"
 [ -r "$HOME/.profile" ] && . "$HOME/.profile"
