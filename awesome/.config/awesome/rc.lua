@@ -47,6 +47,7 @@ beautiful.init(awful.util.get_themes_dir() .. "zenburn/theme.lua")
 terminal = "urxvtc"
 editor = os.getenv("VISUAL") or "editor"
 editor_cmd = terminal .. " -e " .. editor
+lock_cmd = "i3lock -c 000000"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -134,21 +135,21 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = awful.util.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+  awful.button({ }, 1, function(t) t:view_only() end),
+  awful.button({ modkey }, 1, function(t)
+    if client.focus then
+      client.focus:move_to_tag(t)
+    end
+  end),
+  awful.button({ }, 3, awful.tag.viewtoggle),
+  awful.button({ modkey }, 3, function(t)
+    if client.focus then
+      client.focus:toggle_tag(t)
+    end
+  end),
+  awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+  awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+)
 
 local tasklist_buttons = awful.util.table.join(
                      awful.button({ }, 1, function (c)
@@ -376,8 +377,14 @@ globalkeys = awful.util.table.join(
             awful.spawn("mate-screenshot -a")
         end,
         {description = "print area of screen", group = "other"}
-    )
+    ),
 
+    -- Move between tags with the keyboard
+    awful.key({ modkey, "Mod1" }, "l", function() awful.tag.viewnext(awful.screen.focused()) end),
+    awful.key({ modkey, "Mod1" }, "h", function() awful.tag.viewprev(awful.screen.focused()) end),
+
+    -- Lock screen with Super+L
+    awful.key({ modkey }, "l", function() awful.spawn(lock_cmd) end)
 )
 
 clientkeys = awful.util.table.join(
@@ -409,7 +416,11 @@ clientkeys = awful.util.table.join(
             c.maximized = not c.maximized
             c:raise()
         end ,
-        {description = "maximize", group = "client"})
+        {description = "maximize", group = "client"}),
+
+    -- Alt+F4 binding to close a window (client)
+    awful.key({"Mod1"}, "F4", function (c) c:kill() end,
+              {description = "close window", group = "client"})
 )
 
 -- Bind all key numbers to tags.
