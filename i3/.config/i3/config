@@ -153,7 +153,22 @@ bar {
 }
 
 # Locks screen
-bindsym Mod1+Control+l exec --no-startup-id i3lock -c 000000
+bindsym Mod1+Control+l exec --no-startup-id "$HOME/.config/i3/lockscreen.sh"
+
+# No multimedia keys :-(
+bindsym $mod+KP_Add exec --no-startup-id amixer set Master 5%+ unmute
+bindsym $mod+KP_Subtract exec --no-startup-id amixer set Master 5%- unmute
+bindsym $mod+KP_Multiply exec --no-startup-id amixer set Master toggle
+
+bindsym $mod+z exec --no-startup-id playerctl previous
+bindsym $mod+x exec --no-startup-id playerctl pause
+bindsym $mod+c exec --no-startup-id playerctl play
+bindsym $mod+v exec --no-startup-id playerctl stop
+bindsym $mod+b exec --no-startup-id playerctl next
+
+bindsym Print exec --no-startup-id scrot
+bindsym Mod1+Print exec --no-startup-id scrot -u
+bindsym Control+Print exec --no-startup-id scrot -s
 
 # Wallpaper is managed by nitrogen
 exec --no-startup-id compton --backend glx --vsync drm
