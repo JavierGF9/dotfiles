@@ -166,12 +166,12 @@ bindsym $mod+c exec --no-startup-id playerctl play
 bindsym $mod+v exec --no-startup-id playerctl stop
 bindsym $mod+b exec --no-startup-id playerctl next
 
-bindsym Print exec --no-startup-id scrot
-bindsym Mod1+Print exec --no-startup-id scrot -u
-bindsym Control+Print exec --no-startup-id scrot -s
+bindsym Print exec --no-startup-id scrot -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
+bindsym $mod+Print exec --no-startup-id scrot -u -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
+bindsym Mod1+Print exec --no-startup-id scrot -s -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
 
 # Wallpaper is managed by nitrogen
-exec --no-startup-id compton --backend glx --vsync drm
+#exec --no-startup-id compton --backend glx --vsync opengl-mswc
 exec --no-startup-id pulseaudio --start
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id dunst -config "$HOME/.dunstrc"
