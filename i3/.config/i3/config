@@ -33,7 +33,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -152,27 +152,42 @@ bar {
         status_command i3status
 }
 
-# Locks screen
+# Screensaver
 bindsym Mod1+Control+l exec --no-startup-id "$HOME/.config/i3/lockscreen.sh"
+bindsym XF86ScreenSaver exec --no-startup-id "$HOME/.config/i3/lockscreen.sh"
 
-# No multimedia keys :-(
+# Volume control
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 5%- unmute
+bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
 bindsym $mod+KP_Add exec --no-startup-id amixer set Master 5%+ unmute
 bindsym $mod+KP_Subtract exec --no-startup-id amixer set Master 5%- unmute
 bindsym $mod+KP_Multiply exec --no-startup-id amixer set Master toggle
 
+# Media player controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioStop exec --no-startup-id playerctl stop
 bindsym $mod+z exec --no-startup-id playerctl previous
 bindsym $mod+x exec --no-startup-id playerctl pause
 bindsym $mod+c exec --no-startup-id playerctl play
 bindsym $mod+v exec --no-startup-id playerctl stop
 bindsym $mod+b exec --no-startup-id playerctl next
 
+# Screen configuration
+bindsym XF86TouchpadToggle exec --no-startup-id "$HOME/.config/i3/toggletouchpad.sh"
+bindsym XF86Display exec lxrandr
+
+# Screenshots
 bindsym Print exec --no-startup-id scrot -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
 bindsym $mod+Print exec --no-startup-id scrot -u -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
 bindsym Mod1+Print exec --no-startup-id scrot -s -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
 
-# Wallpaper is managed by nitrogen
-#exec --no-startup-id compton --backend glx --vsync opengl-mswc
+# Autostart
+exec --no-startup-id compton --backend glx --vsync drm
 exec --no-startup-id pulseaudio --start
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id dunst -config "$HOME/.dunstrc"
 exec --no-startup-id urxvtd -q -o
+exec --no-startup-id caja-dropbox start

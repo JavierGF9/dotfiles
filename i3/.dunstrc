@@ -216,3 +216,10 @@
     urgency = low
     foreground = "#191414"
     background = "#1db954"
+
+[telegram]
+    appname = Telegram Desktop
+    format = "Telegram\n<b>%s</b>\n%b"
+    urgency = normal
+    foreground = "#cccccc"
+    background = "#0088cc"
