@@ -149,6 +149,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        tray_output primary
         status_command i3status
 }
 
@@ -180,9 +181,15 @@ bindsym XF86TouchpadToggle exec --no-startup-id "$HOME/.config/i3/toggletouchpad
 bindsym XF86Display exec lxrandr
 
 # Screenshots
-bindsym Print exec --no-startup-id scrot -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
-bindsym $mod+Print exec --no-startup-id scrot -u -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
-bindsym Mod1+Print exec --no-startup-id scrot -s -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
+bindsym --release Print exec scrot -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
+bindsym --release $mod+Print exec scrot -u -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
+bindsym --release Shift+Print exec scrot -s -e 'mkdir -p ~/screenshots && mv $f ~/screenshots/'
+
+# Move workspaces between monitors
+bindsym $mod+Ctrl+h move workspace to output right
+bindsym $mod+Ctrl+l move workspace to output left
+bindsym $mod+Ctrl+Right move workspace to output right
+bindsym $mod+Ctrl+Left move workspace to output left
 
 # Autostart
 exec --no-startup-id compton --backend glx --vsync drm
@@ -190,4 +197,5 @@ exec --no-startup-id pulseaudio --start
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id dunst -config "$HOME/.dunstrc"
 exec --no-startup-id urxvtd -q -o
+exec --no-startup-id nm-applet
 exec --no-startup-id caja-dropbox start

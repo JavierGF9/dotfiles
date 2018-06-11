@@ -11,7 +11,7 @@ general {
         interval = 5
 }
 
-order += "disk /"
+#order += "disk /"
 order += "disk /home"
 order += "wireless wlp3s0"
 order += "ethernet enp9s0"
