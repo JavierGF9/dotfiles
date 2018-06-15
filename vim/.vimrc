@@ -1,11 +1,17 @@
 set nocompatible
 let mapleader = ","
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"                                               "
+"                    PLUGINS                    "
+"                                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'ervandew/supertab'
 Plug 'JavierGF9/spotivim'
-Plug 'kien/ctrlp.vim'
 Plug 'mbbill/undotree'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'scrooloose/nerdcommenter'
@@ -13,9 +19,19 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-syntastic/syntastic'
-Plug 'tbastos/vim-lua'
-Plug 'vim-latex/vim-latex'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'uptech/vim-slack-format'
+Plug 'marcopaganini/mojave-vim-theme'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'majutsushi/tagbar'
 call plug#end()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"                                               "
+"                    PLUGINS                    "
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax on
 filetype on
@@ -64,8 +80,6 @@ set directory=$HOME/.vim/swp
 set ignorecase
 set incsearch
 set hlsearch
-nnoremap <F3> :noh<CR>
-inoremap <F3> <Esc>:noh<CR>li
 
 " set colorcolumn=72
 " highlight ColorColumn ctermbg=darkgrey
@@ -93,6 +107,65 @@ inoremap <F3> <Esc>:noh<CR>li
 "autocmd FileType asm setlocal softtabstop=8
 "autocmd FileType asm setlocal shiftwidth=8
 
+" Ruby indentation
+autocmd FileType ruby setlocal expandtab shiftwidth=0 tabstop=2
+
+" Lua indentation
+autocmd FileType lua setlocal expandtab shiftwidth=0 tabstop=2
+
+" C indentation
+autocmd FileType c setlocal noexpandtab shiftwidth=0 tabstop=4
+
+let g:ctrlp_extensions = ["tag", "buffertag"]
+let g:ctrlp_working_path_mode = 'ra'
+
+" The Silver Searcher (1)
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" Syntastic options
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_ruby_checkers = ['rubocop', 'mri'] " Ruby best checker
+let g:syntastic_ruby_rubocop_args = "-l"
+
+" Using ripper-tags with tagbar
+if executable('ripper-tags')
+
+  " Configure Tagbar to user ripper-tags with ruby
+  let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+      \ 'm:modules',
+      \ 'c:classes',
+      \ 'f:methods',
+      \ 'F:singleton methods',
+      \ 'C:constants',
+      \ 'a:aliases'
+    \ ],
+    \ 'ctagsbin':  'ripper-tags',
+    \ 'ctagsargs': ['--fields=+n', '--excmd=pattern', '-f', '-']
+    \ }
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"                                               "
+"                  MAPPINGS                     "
+"                                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Deselect current search
+nnoremap <F3> :noh<CR>
+inoremap <F3> <Esc>:noh<CR>li
+vnoremap <F3> <Esc>:noh<CR>gv
+
 " Saves with Ctrl-S
 " needs 'stty -ixon' in .bashrc or .zshrc, if not this hangs the terminal
 nnoremap <C-S> :%update<CR>
@@ -114,12 +187,15 @@ vnoremap <Space> :StripWhitespace<CR>
 nnoremap <F5> :UndotreeToggle<CR>
 
 " Move lines
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
-"inoremap <C-j> <Esc>:m .+1<CR>==gi
-"inoremap <C-k> <Esc>:m .-2<CR>==gi
+nmap <C-k> [e
+nmap <C-j> ]e
+nmap <C-Up> [e
+nmap <C-Down> ]e
+
+vmap <C-k> [egv
+vmap <C-j> ]egv
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
 
 " Keep selection after nesting
 vnoremap > >gv
@@ -133,15 +209,6 @@ inoremap <C-l> <Esc>:SpNext<CR>gi
 vnoremap <C-h> <Esc>:SpPrevious<CR>gv
 vnoremap <C-l> <Esc>:SpNext<CR>gv
 
-" Ruby indentation
-autocmd FileType ruby setlocal expandtab shiftwidth=0 tabstop=2
-
-" Lua indentation
-autocmd FileType lua setlocal expandtab shiftwidth=0 tabstop=2
-
-" C indentation
-autocmd FileType c setlocal noexpandtab shiftwidth=0 tabstop=4
-
 " TagList
 nnoremap <leader><Tab> :TlistToggle<CR>
 
@@ -151,16 +218,14 @@ nnoremap <S-F8> :tabprevious<CR>
 nnoremap <C-F8> :tabnew<CR>
 "nnoremap <C-S-F8> :tabclose<CR>
 
-" Buffers navigation
-nnoremap <F7> :bNext<CR>
-nnoremap <S-F7> :bprevious<CR>
-"nnoremap <C-F7> :sbNext<CR>
-"nnoremap <C-S-F7> :sbprevious<CR>
+" Tagbar
+nnoremap <F8> :TagbarToggle<CR>
 
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
 
-autocmd FileType tex setlocal shiftwidth=2
-autocmd FileType tex setlocal iskeyword+=:
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"                                               "
+"                  REFERENCES                   "
+"                                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" (1) https://robots.thoughtbot.com/faster-grepping-in-vim
