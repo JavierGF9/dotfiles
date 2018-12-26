@@ -1,0 +1,20 @@
+alias gst="git status"
+alias gd="git diff"
+alias gf="git fetch --all"
+alias gch="git checkout"
+alias gcm="git checkout master"
+alias gcp="git checkout production"
+alias gl="git log --abbrev-commit"
+
+alias l='ls --color=auto -lah'
+alias la='ls --color=auto -lAh'
+alias ll='ls --color=auto -lh'
+alias ls='ls --color=auto'
+alias lsa='ls --color=auto -lah'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias tmux="tmux -2"
+alias ts="tmux -2 new-session -s"
