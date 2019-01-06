@@ -15,8 +15,12 @@ pkill -u "$USER" -USR1 dunst
 trap revert_dpms SIGHUP SIGINT SIGTERM
 xset +dpms dpms 5 5 5
 
-systemctl suspend
-i3lock -n -c 000000 -e
+i3lock -c 000000 -e && systemctl suspend
+
+while pgrep -f i3lock > /dev/null
+do
+	sleep 0.5
+done
 
 revert_dpms
 
