@@ -120,7 +120,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
 
     # browser for opening urls in context menu
-    browser = /home/javier/firefox/firefox -new-tab
+    browser = /home/javier/firefox/firefox --new-tab
 
 [frame]
     width = 2
