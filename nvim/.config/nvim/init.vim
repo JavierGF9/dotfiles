@@ -25,6 +25,8 @@ Plug 'marcopaganini/mojave-vim-theme'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'majutsushi/tagbar'
 Plug 'morhetz/gruvbox'
+Plug 'itchyny/lightline.vim'
+Plug 'shinchu/lightline-gruvbox.vim'
 call plug#end()
 
 
@@ -43,9 +45,10 @@ set showbreak=↪
 set linebreak
 set writebackup
 
-" Status bar (always shown)
-set laststatus=2
-set statusline=>\ Buf:#%-2n\ %f\ %r%m%h[0x%B]%=%l/%L[%3p%%],\ %v\ %#warningmsg#%{SyntasticStatuslineFlag()}%*<
+" 24-bit colors (currently bugged in Debian 9)
+if $TERM == "screen-256color"
+  set termguicolors
+endif
 
 " Use system's clipboard (like Ctrl-C, Ctrl-V)
 set clipboard=unnamedplus
@@ -69,6 +72,19 @@ else
     colorscheme desert
   endif
 endif
+
+" Status bar (always shown)
+let g:lightline = {}
+let g:lightline.colorscheme = 'gruvbox'
+
+" Gruvbox workarounds (because vim-unimpaired)
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+
+nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
 
 " Swapfiles
 set swapfile
@@ -126,6 +142,8 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
 " Syntastic options
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
@@ -170,6 +188,7 @@ endif
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabCompleteCase = 'match'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "                                               "
