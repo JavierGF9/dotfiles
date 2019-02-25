@@ -185,19 +185,19 @@ bindsym Mod1+Control+l exec --no-startup-id lock-screen
 bindsym XF86ScreenSaver exec --no-startup-id lock-screen
 
 # Brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 10
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10
 
 # Volume control
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 5%- unmute
-bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
-bindsym $mod+KP_Add exec --no-startup-id amixer set Master 5%+ unmute
-bindsym $mod+KP_Subtract exec --no-startup-id amixer set Master 5%- unmute
-bindsym $mod+KP_Multiply exec --no-startup-id amixer -q set Master toggle
-bindsym $mod+plus exec --no-startup-id amixer set Master 5%+ unmute
-bindsym $mod+minus exec --no-startup-id amixer set Master 5%- unmute
-bindsym $mod+Shift+plus exec --no-startup-id amixer -q set Master toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5 -u
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5 -u
+bindsym XF86AudioMute exec --no-startup-id pamixer -t
+bindsym $mod+KP_Add exec --no-startup-id pamixer -i 5 -u
+bindsym $mod+KP_Subtract exec --no-startup-id pamixer -d 5 -u
+bindsym $mod+KP_Multiply exec --no-startup-id pamixer -t
+bindsym $mod+plus exec --no-startup-id pamixer -i 5 -u
+bindsym $mod+minus exec --no-startup-id pamixer -d 5 -u
+bindsym $mod+Shift+plus exec --no-startup-id pamixer -t
 
 # Media player controls
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
