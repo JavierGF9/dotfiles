@@ -18,7 +18,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-syntastic/syntastic'
-Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'uptech/vim-slack-format'
 Plug 'marcopaganini/mojave-vim-theme'
@@ -27,6 +26,8 @@ Plug 'majutsushi/tagbar'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 
@@ -119,13 +120,16 @@ set hlsearch
 "autocmd FileType asm setlocal shiftwidth=8
 
 " Ruby indentation
-autocmd FileType ruby setlocal expandtab shiftwidth=0 tabstop=2
+autocmd FileType ruby setlocal expandtab tabstop=2 softtabstop=0 shiftwidth=0
 
 " Lua indentation
 autocmd FileType lua setlocal expandtab shiftwidth=0 tabstop=2
 
 " C indentation
 autocmd FileType c setlocal noexpandtab shiftwidth=0 tabstop=4
+
+" YAML indentation
+autocmd FileType yaml setlocal expandtab tabstop=2 softtabstop=0 shiftwidth=0
 
 let g:ctrlp_extensions = ["tag", "buffertag"]
 let g:ctrlp_working_path_mode = 'ra'
@@ -148,7 +152,6 @@ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
 let g:syntastic_ruby_checkers = ['rubocop', 'mri'] " Ruby best checker
-let g:syntastic_ruby_rubocop_args = "-l"
 
 " Using ripper-tags with tagbar
 if executable('ripper-tags')
@@ -188,6 +191,12 @@ endif
 let g:SuperTabCrMapping = 1
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabCompleteCase = 'match'
+
+" Tasklist
+let g:tlTokenList = ["FIXME", "TODO", "XXX", "WORKAROUND", "DEBUG"]
+
+" FZF
+let g:fzf_tags_command = 'ripper-tags -R'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
@@ -250,6 +259,14 @@ nnoremap <F8> :TagbarToggle<CR>
 
 " NeoVim terminal
 tnoremap <Esc> <C-\><C-n>
+
+" Tasklist
+map <leader>v <Plug>TaskList
+
+" FZF
+nmap <C-P> :Files<CR>
+nmap <leader>c :BCommits<CR>
+nmap <leader>g :Tags<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
