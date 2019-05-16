@@ -1,17 +1,10 @@
 Xcursor.theme: capitaine-cursors
 
-xft*dpi: 96
-Xft.rgba: rgb
-Xft.lcdfilter: lcddefault
-Xft.hinting: true
-Xft.autohint: true
-Xft.hintstyle: hintfull
-Xft.antialias: true
-
-URxvt.font: xft:IBM 3270:style=Medium
-URxvt.letterSpace: -2
-URxvt.scrollBar: False
+URxvt.font: -*-terminus-medium-*-*-*-16-*-*-*-*-*-*-*
 URxvt.cursorBlink: True
+URxvt.scrollBar: False
+URxvt.transparent: True
+URxvt.shading: 45
 
 ! gruvbox theme
 *.foreground:   #ebdbb2
