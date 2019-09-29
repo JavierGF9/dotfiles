@@ -1,6 +1,4 @@
-set nocompatible
 let mapleader = ","
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "                                               "
@@ -9,25 +7,36 @@ let mapleader = ","
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'airblade/vim-gitgutter'
-Plug 'ervandew/supertab'
-Plug 'mbbill/undotree'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter' " Show changed lines in number columns
+Plug 'mbbill/undotree' " Show undo tree
+Plug 'ntpeters/vim-better-whitespace' " Delete useless spaces
+Plug 'scrooloose/nerdcommenter' " Fast commenting
+Plug 'scrooloose/nerdtree' " File system tree
+Plug 'tpope/vim-fugitive' " GIT commands
 Plug 'vim-ruby/vim-ruby'
-Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-unimpaired'
 Plug 'uptech/vim-slack-format'
-Plug 'marcopaganini/mojave-vim-theme'
-Plug 'jeetsukumaran/vim-buffergator'
-Plug 'majutsushi/tagbar'
-Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
+Plug 'jeetsukumaran/vim-buffergator' " Better buffer list
+Plug 'liuchengxu/vista.vim' " Tags viewer in a window
+Plug 'dense-analysis/ale' " Linter
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completion module
+Plug 'junegunn/vim-peekaboo' " Show registers while pasting or yanking
+Plug 'vim-scripts/TaskList.vim' " Show a list for TODO or FIXME
+
+" Themes and appearance
+Plug 'morhetz/gruvbox' " Dark theme
+Plug 'nightsense/rusticated' " Light theme
+Plug 'itchyny/lightline.vim' " Better status line
 Plug 'shinchu/lightline-gruvbox.vim'
+
+" Faster searchs and more
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" For writing (2)
+Plug 'reedes/vim-pencil' " Super-powered writing things
+Plug 'junegunn/limelight.vim' " Highlights only active paragraph
+Plug 'junegunn/goyo.vim' " Full screen writing mode
 call plug#end()
 
 
@@ -42,14 +51,11 @@ filetype indent on
 filetype plugin on
 
 set novisualbell
-set showbreak=↪
-set linebreak
+set termguicolors
 set writebackup
-
-" 24-bit colors (currently bugged in Debian 9)
-if $TERM == "screen-256color"
-  set termguicolors
-endif
+set linebreak
+set showbreak=↪
+set cursorline
 
 " Use system's clipboard (like Ctrl-C, Ctrl-V)
 set clipboard=unnamedplus
@@ -60,23 +66,14 @@ set number
 " Enable mouse
 set mouse=a
 
-" Theme
-if has("gui_running")
-  colorscheme autumn
-  set guifont=Hack
-else
-  if &t_Co == 256
-    set background=dark
-    set cursorline
-    colorscheme gruvbox
-  else
-    colorscheme desert
-  endif
-endif
+" Theme (gruvbox)
+set background=dark
+colorscheme gruvbox
+let g:lightline = { 'colorscheme': 'gruvbox' }
 
-" Status bar (always shown)
-let g:lightline = {}
-let g:lightline.colorscheme = 'gruvbox'
+" Theme (rusticated)
+"colorscheme rusticated
+"let g:lightline = { 'colorscheme': 'rusticated' }
 
 " Gruvbox workarounds (because vim-unimpaired)
 nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
@@ -119,6 +116,10 @@ set hlsearch
 "autocmd FileType asm setlocal softtabstop=8
 "autocmd FileType asm setlocal shiftwidth=8
 
+" LaTeX
+let g:tex_flavor = "latex"
+autocmd FileType tex setlocal expandtab tabstop=2 shiftwidth=0 textwidth=72
+
 " Ruby indentation
 autocmd FileType ruby setlocal expandtab tabstop=2 softtabstop=0 shiftwidth=0
 
@@ -148,49 +149,9 @@ endif
 
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-" Syntastic options
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
-let g:syntastic_ruby_checkers = ['rubocop', 'mri'] " Ruby best checker
-
-" Using ripper-tags with tagbar
-if executable('ripper-tags')
-  let g:tagbar_type_ruby = {
-      \ 'kinds'      : ['m:modules',
-		      \ 'c:classes',
-		      \ 'C:constants',
-		      \ 'F:singleton methods',
-		      \ 'f:methods',
-		      \ 'a:aliases'],
-      \ 'kind2scope' : { 'c' : 'class',
-		       \ 'm' : 'class' },
-      \ 'scope2kind' : { 'class' : 'c' },
-      \ 'ctagsbin'   : 'ripper-tags',
-      \ 'ctagsargs'  : ['-f', '-']
-      \ }
-endif
-
-" vim-easytags
-"let g:easytags_async = 1
-"set tags="./tags"
-"let g:easytags_dynamic_files = 1
-
-"if executable('ripper-tags')
-	"let g:easytags_languages = {
-	"\   'ruby': {
-	"\     'cmd': 'ripper-tags',
-	"\	    'args': [],
-	"\	    'fileoutput_opt': '-f',
-	"\	    'stdout_opt': '-f-',
-	"\	    'recurse_flag': '-R'
-	"\   }
-	"\}
-"endif
-
-" SuperTab
-let g:SuperTabCrMapping = 1
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabCompleteCase = 'match'
+" Vista
+let g:vista_default_executive = "coc"
+let g:vista#renderer#enable_icon = 0
 
 " Tasklist
 let g:tlTokenList = ["FIXME", "TODO", "XXX", "WORKAROUND", "DEBUG"]
@@ -198,12 +159,19 @@ let g:tlTokenList = ["FIXME", "TODO", "XXX", "WORKAROUND", "DEBUG"]
 " FZF
 let g:fzf_tags_command = 'ripper-tags -R'
 
+" ALE
+let g:ale_disable_lsp = 1
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "                                               "
 "                  MAPPINGS                     "
 "                                               "
 """""""""""""""""""""""""""""""""""""""""""""""""
+
+" Shortcut to config file
+nmap <leader>C :tabedit $HOME/.config/nvim/init.vim<CR>
+nmap <leader>R :source $HOME/.config/nvim/init.vim<CR>
 
 " Deselect current search
 nnoremap <F3> :noh<CR>
@@ -245,17 +213,14 @@ vmap <C-Down> ]egv
 vnoremap > >gv
 vnoremap < <gv
 
-" TagList
-nnoremap <leader><Tab> :TlistToggle<CR>
-
 " Tabs navigation
 nnoremap <F8> :tabNext<CR>
 nnoremap <S-F8> :tabprevious<CR>
 nnoremap <C-F8> :tabnew<CR>
 "nnoremap <C-S-F8> :tabclose<CR>
 
-" Tagbar
-nnoremap <F8> :TagbarToggle<CR>
+" Vista
+nnoremap <F8> :Vista<CR>
 
 " NeoVim terminal
 tnoremap <Esc> <C-\><C-n>
@@ -276,3 +241,6 @@ nmap <leader>g :Tags<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 "
 " (1) https://robots.thoughtbot.com/faster-grepping-in-vim
+" (2) http://www.naperwrimo.org/wiki/index.php?title=Vim_for_Writers
+
+" vim: et ts=2 sw=2
