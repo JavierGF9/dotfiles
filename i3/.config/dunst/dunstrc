@@ -1,5 +1,5 @@
 [global]
-    font = Monospace 8
+    font = PxPlus IBM VGA9
 
     # allow a small subset of html markup:
     # <b>bold</b>
@@ -182,7 +182,8 @@
 
 [spotify]
     appname = Spotify
-    format = "%a\n<b>%s</b>\n%b"
+    format = "<b>%s</b>\n%b"
     urgency = low
+    markup = strip
     foreground = "#191414"
     background = "#1db954"
