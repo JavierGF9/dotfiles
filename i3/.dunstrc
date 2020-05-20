@@ -47,7 +47,6 @@
     # ignore newlines '\n' in notifications
     ignore_newline = no
 
-
     # the geometry of the window
     # geometry [{width}]x{height}][+/-{x}+/-{y}]
     # The geometry of the message window.
@@ -124,7 +123,7 @@
     browser = /home/javier/firefox/firefox -new-tab
 
 [frame]
-    width = 0
+    width = 2
     color = "#000000"
 
 [shortcuts]
@@ -181,45 +180,9 @@
 # NOTE: It might be helpful to run dunst -print in a terminal in order to find
 # fitting options for rules.
 
-#[espeak]
-#    summary = "*"
-#    script = dunst_espeak.sh
-
-#[script-test]
-#    summary = "*script*"
-#    script = dunst_test.sh
-
-#[ignore]
-## This notification will not be displayed
-#    summary = "foobar"
-#    format = ""
-
-[signed_on]
-    appname = Pidgin
-    summary = "*signed on*"
-    urgency = low
-
-[signed_off]
-    appname = Pidgin
-    summary = *signed off*
-    urgency = low
-
-[says]
-    appname = Pidgin
-    summary = *says*
-    urgency = critical
-    format  = "%s "%b""
-
 [spotify]
     appname = Spotify
     format = "%a\n<b>%s</b>\n%b"
     urgency = low
     foreground = "#191414"
     background = "#1db954"
-
-[telegram]
-    appname = Telegram Desktop
-    format = "Telegram\n<b>%s</b>\n%b"
-    urgency = normal
-    foreground = "#cccccc"
-    background = "#0088cc"

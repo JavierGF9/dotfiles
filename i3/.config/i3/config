@@ -201,14 +201,14 @@ bindsym $mod+Ctrl+Left move workspace to output left
 # Autostart
 exec --no-startup-id compton --backend glx --vsync drm
 exec --no-startup-id lxpolkit
-exec --no-startup-id xset b off
-exec --no-startup-id xmodmap ~/.Xmodmap
+#exec --no-startup-id xset b off
+#exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id dunst -config "$HOME/.dunstrc"
 exec --no-startup-id pulseaudio --start
-exec --no-startup-id urxvtd -q -o
+exec --no-startup-id urxvtd -q -o -f
 exec --no-startup-id udiskie -AFtn
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id i3-battery-popup -n
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
-exec --no-startup-id caja-dropbox start
+#exec --no-startup-id caja-dropbox start

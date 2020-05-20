@@ -25,8 +25,6 @@ Plug 'uptech/vim-slack-format'
 Plug 'marcopaganini/mojave-vim-theme'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'majutsushi/tagbar'
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'  " Dependency of vim-easytags
 Plug 'morhetz/gruvbox'
 call plug#end()
 
@@ -159,20 +157,21 @@ if executable('ripper-tags')
 endif
 
 " vim-easytags
-let g:easytags_async = 1
-let g:easytags_dynamic_files = 1
+"let g:easytags_async = 1
+"set tags="./tags"
+"let g:easytags_dynamic_files = 1
 
-if executable('ripper-tags')
-	let g:easytags_languages = {
-	\   'ruby': {
-	\     'cmd': 'ripper-tags',
-	\	    'args': [],
-	\	    'fileoutput_opt': '-f',
-	\	    'stdout_opt': '-f-',
-	\	    'recurse_flag': '-R'
-	\   }
-	\}
-endif
+"if executable('ripper-tags')
+	"let g:easytags_languages = {
+	"\   'ruby': {
+	"\     'cmd': 'ripper-tags',
+	"\	    'args': [],
+	"\	    'fileoutput_opt': '-f',
+	"\	    'stdout_opt': '-f-',
+	"\	    'recurse_flag': '-R'
+	"\   }
+	"\}
+"endif
 
 " SuperTab
 let g:SuperTabCrMapping = 1
@@ -244,6 +243,9 @@ nnoremap <C-F8> :tabnew<CR>
 
 " Tagbar
 nnoremap <F8> :TagbarToggle<CR>
+
+" NeoVim terminal
+tnoremap <Esc> <C-\><C-n>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""
