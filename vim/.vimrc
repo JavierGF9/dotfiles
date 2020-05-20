@@ -25,6 +25,9 @@ Plug 'uptech/vim-slack-format'
 Plug 'marcopaganini/mojave-vim-theme'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'majutsushi/tagbar'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'  " Dependency of vim-easytags
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 
@@ -56,8 +59,10 @@ set number
 " Enable mouse
 set mouse=a
 
-if &term =~ '^screen' || &term =~ '^xterm'
-  set ttymouse=xterm2
+if !has('nvim')
+  if &term =~ '^screen' || &term =~ '^xterm'
+    set ttymouse=xterm2
+  endif
 endif
 
 " Theme
@@ -66,7 +71,9 @@ if has("gui_running")
   set guifont=Hack
 else
   if &t_Co == 256
-    colorscheme mojave
+    set background=dark
+    set cursorline
+    colorscheme gruvbox
   else
     colorscheme desert
   endif
@@ -80,9 +87,6 @@ set directory=$HOME/.vim/swp
 set ignorecase
 set incsearch
 set hlsearch
-
-" set colorcolumn=72
-" highlight ColorColumn ctermbg=darkgrey
 
 " ADA utilities
 "autocmd FileType ada setlocal expandtab " Usa espacios en vez de tabs.
@@ -139,21 +143,41 @@ let g:syntastic_ruby_rubocop_args = "-l"
 
 " Using ripper-tags with tagbar
 if executable('ripper-tags')
-
-  " Configure Tagbar to user ripper-tags with ruby
   let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-      \ 'm:modules',
-      \ 'c:classes',
-      \ 'f:methods',
-      \ 'F:singleton methods',
-      \ 'C:constants',
-      \ 'a:aliases'
-    \ ],
-    \ 'ctagsbin':  'ripper-tags',
-    \ 'ctagsargs': ['--fields=+n', '--excmd=pattern', '-f', '-']
-    \ }
+      \ 'kinds'      : ['m:modules',
+		      \ 'c:classes',
+		      \ 'C:constants',
+		      \ 'F:singleton methods',
+		      \ 'f:methods',
+		      \ 'a:aliases'],
+      \ 'kind2scope' : { 'c' : 'class',
+		       \ 'm' : 'class' },
+      \ 'scope2kind' : { 'class' : 'c' },
+      \ 'ctagsbin'   : 'ripper-tags',
+      \ 'ctagsargs'  : ['-f', '-']
+      \ }
 endif
+
+" vim-easytags
+let g:easytags_async = 1
+let g:easytags_dynamic_files = 1
+
+if executable('ripper-tags')
+	let g:easytags_languages = {
+	\   'ruby': {
+	\     'cmd': 'ripper-tags',
+	\	    'args': [],
+	\	    'fileoutput_opt': '-f',
+	\	    'stdout_opt': '-f-',
+	\	    'recurse_flag': '-R'
+	\   }
+	\}
+endif
+
+" SuperTab
+let g:SuperTabCrMapping = 1
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabCompleteCase = 'match'
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "                                               "
