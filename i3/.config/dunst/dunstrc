@@ -9,7 +9,7 @@
     #
     # for a complete reference see http://developer.gnome.org/pango/stable/PangoMarkupFormat.html
     # If markup is not allowed, those tags will be stripped out of the message.
-    allow_markup = yes
+    markup = full
 
     # The format of the message. Possible variables are:
     #   %a  appname
@@ -19,7 +19,7 @@
     #   %I  iconname (without its path)
     #   %p  progress value if set ([  0%] to [100%]) or nothing
     # Markup is allowed
-    format = "<b>%a:</b> %s\n%b"
+    format = "<b>%a:</b> %s\n\n%b"
 
     # Sort messages by urgency
     sort = yes
@@ -111,6 +111,10 @@
     #  * anything else will be interpreted as a X color
     separator_color = frame
 
+    # Frame
+    frame_width = 2
+    frame_color = "#000000"
+
     # print a notification on startup
     # This is mainly for error detection, since dbus (re-)starts dunst
     # automatically after a crash.
@@ -121,10 +125,6 @@
 
     # browser for opening urls in context menu
     browser = /home/javier/firefox/firefox --new-tab
-
-[frame]
-    width = 2
-    color = "#000000"
 
 [shortcuts]
     # shortcuts are specified as [modifier+][modifier+]...key
