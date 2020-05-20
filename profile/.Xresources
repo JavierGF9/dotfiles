@@ -1,49 +1,52 @@
 Xcursor.theme: capitaine-cursors
 
-URxvt.font: xft:Hack:style=Regular:size=10
+Xft.rgba: rgbft*dpi: 96
+Xft.autohint: true
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: true
+Xft.antialias: true
+
+URxvt.font: xft:IBM 3270:style=Medium
+URxvt.letterSpace: -2
 URxvt.scrollBar: False
 URxvt.cursorBlink: True
 
-!
-! Zenburn theme
-!
-*.foreground:  #dcdccc
-*.background:  #3f3f3f
-*.cursorColor: #73635a
-!
-! Black
-*.color0:      #4d4d4d
-*.color8:      #709080
-!
-! Red
-*.color1:      #705050
-*.color9:      #dca3a3
-!
-! Green
-*.color2:      #60b48a
-*.color10:     #c3bf9f
-!
-! Yellow
-*.color3:      #f0dfaf
-*.color11:     #e0cf9f
-!
-! Blue
-*.color4:      #506070
-*.color12:     #94bff3
-!
-! Magenta
-*.color5:      #dc8cc3
-*.color13:     #ec93d3
-!
-! Cyan
-*.color6:      #8cd0d3
-*.color14:     #93e0e3
-!
-! White
-*.color7:      #dcdccc
-*.color15:     #ffffff
-!
-! Bold, Italic, Underline
-*.colorBD:     #dcdccc
-!*.colorIT:
-!*.colorUL:
+
+! Monokai theme
+! special
+*.foreground:   #f8f8f2
+*.background:   #272822
+*.cursorColor:  #f8f8f2
+
+! black
+*.color0:       #272822
+*.color8:       #75715e
+
+! red
+*.color1:       #f92672
+*.color9:       #f92672
+
+! green
+*.color2:       #a6e22e
+*.color10:      #a6e22e
+
+! yellow
+*.color3:       #f4bf75
+*.color11:      #f4bf75
+
+! blue
+*.color4:       #66d9ef
+*.color12:      #66d9ef
+
+! magenta
+*.color5:       #ae81ff
+*.color13:      #ae81ff
+
+! cyan
+*.color6:       #a1efe4
+*.color14:      #a1efe4
+
+! white
+*.color7:       #f8f8f2
+*.color15:      #f9f8f5
