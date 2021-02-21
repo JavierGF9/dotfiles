@@ -1,6 +1,13 @@
 #!/bin/zsh
 # vim:et ts=2 sw=0 sts=0
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -12,7 +19,7 @@ export ZSH_AUTOSUGGEST_STRATEGY="match_prev_cmd"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="gallois"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -68,9 +75,8 @@ ZSH_THEME="gallois"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   colored-man-pages
-  zsh-autosuggestions
   gpg-agent
-  ssh-agent
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -78,11 +84,13 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Shell options
-unsetopt sharehistory
+setopt appendhistory
+setopt correct
+setopt hashlistall
+setopt histfindnodups
+setopt histignoredups
 unsetopt incappendhistory
 unsetopt incappendhistorytime
-setopt histignoredups
-setopt appendhistory
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -110,12 +118,19 @@ setopt appendhistory
 # For a full list of active aliases, run `alias`.
 [[ -r "$HOME/.aliases" ]] && source "$HOME/.aliases"
 
-function work_in_progress() {
-  if $(git log -n 1 2>/dev/null | grep -q -c "\-\-wip\-\-"); then
-    echo "WIP!!"
-  fi
-}
+# Neovim shortcuts
+if whence nvim &> /dev/null; then
+  alias vim=nvim
+  alias view="nvim -R"
+  alias vimdiff="nvim -d"
+fi
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+if [[ -d "$HOME/.asdf" ]]; then
+  source "$HOME/.asdf/asdf.sh"
+  source "$HOME/.asdf/completions/asdf.bash"
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
