@@ -21,21 +21,15 @@ Plug 'itchyny/lightline.vim'          " Better status line
 " Syntax files
 Plug 'chrisbra/csv.vim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'kchmck/vim-coffee-script'
+Plug 'slim-template/vim-slim'
 
 " Themes and appearance
 Plug 'dracula/vim', { 'name': 'dracula' }
-Plug 'morhetz/gruvbox'
-Plug 'nightsense/rusticated'
-Plug 'shinchu/lightline-gruvbox.vim'
 
 " Faster searchs and more
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
-" For writing (2)
-Plug 'reedes/vim-pencil'      " Super-powered writing things
-Plug 'junegunn/limelight.vim' " Highlights only active paragraph
-Plug 'junegunn/goyo.vim'      " Full screen writing mode
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -62,10 +56,9 @@ set termguicolors
 set writebackup
 
 " Line wraps
-set wrap
-set linebreak
-set breakindent
-let &showbreak = '↪ '
+set nowrap
+set sidescroll=5
+set listchars+=precedes:<,extends:>
 
 set cursorline
 
@@ -82,24 +75,8 @@ set mouse=a
 colorscheme dracula
 let g:lightline = { 'colorscheme': 'dracula' }
 
-"" Gruvbox theme
-"set background=dark
-"colorscheme gruvbox
-"let g:lightline = { 'colorscheme': 'gruvbox' }
-
-" Gruvbox workarounds (because vim-unimpaired)
-"nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
-"nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
-"nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
-"nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-"nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-"nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
-
-"" Rusticated theme
-"colorscheme rusticated
-"let g:lightline = { 'colorscheme': 'rusticated' }
-
 " Nvim providers
+let g:ruby_host_prog = $HOME . '/.asdf/shims/ruby'
 let g:loaded_node_provider = 0
 let g:loaded_perl_provider = 0
 
