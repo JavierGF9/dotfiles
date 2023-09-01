@@ -69,6 +69,11 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+export ZSH_TMUX_AUTOSTART="false"
+export ZSH_TMUX_AUTOSTART_ONCE="true"
+export ZSH_TMUX_AUTOCONNECT="true"
+export ZSH_TMUX_UNICODE="true"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -76,6 +81,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   colored-man-pages
   gpg-agent
+  tmux
   zsh-autosuggestions
 )
 
