@@ -1,32 +1,31 @@
+" vim: et ts=2 sw=2
+
 let mapleader = ","
 
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"                                               "
-"                    PLUGINS                    "
-"                                               "
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'airblade/vim-gitgutter' " Show changed lines in number columns
-Plug 'mbbill/undotree' " Show undo tree
+Plug 'airblade/vim-gitgutter'         " Show changed lines in number columns
+Plug 'mbbill/undotree'                " Show undo tree
 Plug 'ntpeters/vim-better-whitespace' " Delete useless spaces
-Plug 'scrooloose/nerdcommenter' " Fast commenting
-Plug 'scrooloose/nerdtree' " File system tree
-Plug 'tpope/vim-fugitive' " GIT commands
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-unimpaired'
-Plug 'uptech/vim-slack-format'
-Plug 'jeetsukumaran/vim-buffergator' " Better buffer list
-Plug 'liuchengxu/vista.vim' " Tags viewer in a window
-Plug 'dense-analysis/ale' " Linter
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completion module
-Plug 'junegunn/vim-peekaboo' " Show registers while pasting or yanking
-Plug 'vim-scripts/TaskList.vim' " Show a list for TODO or FIXME
+Plug 'scrooloose/nerdcommenter'       " Fast commenting
+Plug 'scrooloose/nerdtree'            " File system tree
+Plug 'tpope/vim-fugitive'             " GIT commands
+Plug 'tpope/vim-unimpaired'           " Pairs of handy bracket mappings
+Plug 'jeetsukumaran/vim-buffergator'  " Better buffer list
+Plug 'junegunn/vim-peekaboo'          " Show registers while pasting or yanking
+Plug 'vim-scripts/TaskList.vim'       " Show a list for TODO, FIXME...
+Plug 'godlygeek/tabular'              " Tabularize well
+Plug 'chrisbra/NrrwRgn'               " Narrow region
+Plug 'Yggdroot/indentLine'            " Show indentation lines
+Plug 'itchyny/lightline.vim'          " Better status line
+
+" Syntax files
+Plug 'chrisbra/csv.vim'
+Plug 'elixir-editors/vim-elixir'
 
 " Themes and appearance
-Plug 'morhetz/gruvbox' " Dark theme
-Plug 'nightsense/rusticated' " Light theme
-Plug 'itchyny/lightline.vim' " Better status line
+Plug 'dracula/vim', { 'name': 'dracula' }
+Plug 'morhetz/gruvbox'
+Plug 'nightsense/rusticated'
 Plug 'shinchu/lightline-gruvbox.vim'
 
 " Faster searchs and more
@@ -34,16 +33,24 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " For writing (2)
-Plug 'reedes/vim-pencil' " Super-powered writing things
+Plug 'reedes/vim-pencil'      " Super-powered writing things
 Plug 'junegunn/limelight.vim' " Highlights only active paragraph
-Plug 'junegunn/goyo.vim' " Full screen writing mode
+Plug 'junegunn/goyo.vim'      " Full screen writing mode
+
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-vsnip'
+
+" Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 call plug#end()
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"                                               "
-"                    PLUGINS                    "
-"""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax on
 filetype on
@@ -53,36 +60,48 @@ filetype plugin on
 set novisualbell
 set termguicolors
 set writebackup
+
+" Line wraps
+set wrap
 set linebreak
-set showbreak=↪
+set breakindent
+let &showbreak = '↪ '
+
 set cursorline
 
 " Use system's clipboard (like Ctrl-C, Ctrl-V)
 set clipboard=unnamedplus
 
-" Números de columna
+" Column numbers
 set number
 
 " Enable mouse
 set mouse=a
 
-" Theme (gruvbox)
-set background=dark
-colorscheme gruvbox
-let g:lightline = { 'colorscheme': 'gruvbox' }
+"" Dracula theme
+colorscheme dracula
+let g:lightline = { 'colorscheme': 'dracula' }
 
-" Theme (rusticated)
+"" Gruvbox theme
+"set background=dark
+"colorscheme gruvbox
+"let g:lightline = { 'colorscheme': 'gruvbox' }
+
+" Gruvbox workarounds (because vim-unimpaired)
+"nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+"nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+"nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+"nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+"nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+"nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+
+"" Rusticated theme
 "colorscheme rusticated
 "let g:lightline = { 'colorscheme': 'rusticated' }
 
-" Gruvbox workarounds (because vim-unimpaired)
-nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
-nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
-nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
-
-nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+" Nvim providers
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider = 0
 
 " Swapfiles
 set swapfile
@@ -93,81 +112,30 @@ set ignorecase
 set incsearch
 set hlsearch
 
-" ADA utilities
-"autocmd FileType ada setlocal expandtab " Usa espacios en vez de tabs.
-"autocmd FileType ada setlocal tabstop=3
-"autocmd FileType ada setlocal softtabstop=3
-"autocmd FileType ada setlocal shiftwidth=3
+autocmd FileType json nnoremap <buffer> <leader>f :%! python3 -m json.tool --no-ensure-ascii<CR>
 
-"autocmd FileType ada setlocal makeprg=gnatmake\ -gnat95\ %
-"autocmd FileType ada nmap <buffer> <F4> :w<CR> :make<CR>
-"autocmd FileType ada nmap <buffer> <F5> :! ./%<<CR>
+autocmd FileType ruby let g:fzf_tags_command = 'ripper-tags -R' " Use ripper-tags in FZF
 
-" Python utilities
-"autocmd FileType python nmap <buffer> <F5> :w<CR> :! python3 %<CR>
-"autocmd FileType python nmap <buffer> <S-F5> :w<CR> :! python2 %<CR>
-"autocmd FileType python setlocal expandtab
-"autocmd FileType python setlocal tabstop=4
-"autocmd FileType python setlocal softtabstop=0
-"autocmd FileType python setlocal shiftwidth=0
+" Better completion
+set completeopt=menu,noinsert,noselect,preview
 
-" ASM utilities
-"autocmd FileType asm setlocal expandtab
-"autocmd FileType asm setlocal softtabstop=8
-"autocmd FileType asm setlocal shiftwidth=8
-
-" LaTeX
-let g:tex_flavor = "latex"
-autocmd FileType tex setlocal expandtab tabstop=2 shiftwidth=0 textwidth=72
-
-" Ruby indentation
-autocmd FileType ruby setlocal expandtab tabstop=2 softtabstop=0 shiftwidth=0
-
-" Lua indentation
-autocmd FileType lua setlocal expandtab shiftwidth=0 tabstop=2
-
-" C indentation
-autocmd FileType c setlocal noexpandtab shiftwidth=0 tabstop=4
-
-" YAML indentation
-autocmd FileType yaml setlocal expandtab tabstop=2 softtabstop=0 shiftwidth=0
-
-let g:ctrlp_extensions = ["tag", "buffertag"]
-let g:ctrlp_working_path_mode = 'ra'
-
-" The Silver Searcher (1)
+" Use the Silver Searcher over grep (1)
 if executable('ag')
-  " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-" Vista
-let g:vista_default_executive = "coc"
-let g:vista#renderer#enable_icon = 0
-
 " Tasklist
 let g:tlTokenList = ["FIXME", "TODO", "XXX", "WORKAROUND", "DEBUG"]
 
-" FZF
-let g:fzf_tags_command = 'ripper-tags -R'
+" Buffergator
+let g:buffergator_suppress_keymaps = 1
+nnoremap <leader>b :BuffergatorOpen<CR>
+nnoremap <leader>B :BuffergatorClose<CR>
 
-" ALE
-let g:ale_disable_lsp = 1
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"                                               "
-"                  MAPPINGS                     "
-"                                               "
-"""""""""""""""""""""""""""""""""""""""""""""""""
+" indentLine
+let g:indentLine_char = "┊"
 
 " Shortcut to config file
 nmap <leader>C :tabedit $HOME/.config/nvim/init.vim<CR>
@@ -177,11 +145,6 @@ nmap <leader>R :source $HOME/.config/nvim/init.vim<CR>
 nnoremap <F3> :noh<CR>
 inoremap <F3> <Esc>:noh<CR>li
 vnoremap <F3> <Esc>:noh<CR>gv
-
-" Saves with Ctrl-S
-" needs 'stty -ixon' in .bashrc or .zshrc, if not this hangs the terminal
-nnoremap <C-S> :%update<CR>
-inoremap <C-S> <Esc>:%update<CR>li
 
 " NERDTree
 noremap <C-e> <Esc>:NERDTreeToggle<CR>
@@ -201,29 +164,18 @@ nnoremap <F5> :UndotreeToggle<CR>
 " Move lines
 nmap <C-k> [e
 nmap <C-j> ]e
-nmap <C-Up> [e
-nmap <C-Down> ]e
-
 vmap <C-k> [egv
 vmap <C-j> ]egv
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
 
 " Keep selection after nesting
 vnoremap > >gv
 vnoremap < <gv
 
 " Tabs navigation
-nnoremap <F8> :tabNext<CR>
-nnoremap <S-F8> :tabprevious<CR>
-nnoremap <C-F8> :tabnew<CR>
-"nnoremap <C-S-F8> :tabclose<CR>
-
-" Vista
-nnoremap <F8> :Vista<CR>
-
-" NeoVim terminal
-tnoremap <Esc> <C-\><C-n>
+nnoremap <leader>tn :tabnext<CR>
+nnoremap <leader>tp :tabnext -<CR>
+nnoremap <leader>tc :tabnew<CR>
+nnoremap <leader>tx :tabclose<CR>
 
 " Tasklist
 map <leader>v <Plug>TaskList
@@ -233,14 +185,111 @@ nmap <C-P> :Files<CR>
 nmap <leader>c :BCommits<CR>
 nmap <leader>g :Tags<CR>
 
+" Tabular (2)
+if exists(":Tabularize")
+  nmap <leader>a= :Tabularize /=<CR>
+  vmap <leader>a= :Tabularize /=<CR>
+  nmap <leader>a: :Tabularize /:\zs<CR>
+  vmap <leader>a: :Tabularize /:\zs<CR>
+  nmap <leader>a| :Tabularize /|\zs<CR>
+  vmap <leader>a| :Tabularize /|\zs<CR>
+endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""
-"                                               "
-"                  REFERENCES                   "
-"                                               "
-"""""""""""""""""""""""""""""""""""""""""""""""""
+" NrrwRgn
+vnoremap <leader>n :NarrowRegion<CR>
+nnoremap <leader>n :WidenRegion!<CR>
+
+lua << EOF
+-- Setup nvim-cmp.
+local cmp = require('cmp')
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = {
+    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item()),
+    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  sources = cmp.config.sources({
+    { name = 'buffer' }
+  })
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+    { name = 'cmdline' }
+  })
+})
+
+-- Setup lspconfig.
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+require('lspconfig')['solargraph'].setup {
+  settings = {
+    solargraph = {
+      useBundler = true
+    }
+  },
+  capabilities = capabilities
+}
+
+require('lspconfig')['elixirls'].setup {
+  cmd = { os.getenv("HOME") .. '/elixir-ls/language_server.sh' },
+  capabilities = capabilities
+}
+
+require('nvim-treesitter.configs').setup {
+  ensure_installed = { "elixir", "javascript", "json", "markdown", "ruby", "yaml" },
+  highlight = {
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  indent = {
+    -- This feature is experimental
+    enable = false,
+  },
+  incremental_selection = {
+    enable = true,
+  },
+}
+EOF
+
+"" REFERENCES
 "
 " (1) https://robots.thoughtbot.com/faster-grepping-in-vim
-" (2) http://www.naperwrimo.org/wiki/index.php?title=Vim_for_Writers
-
-" vim: et ts=2 sw=2
+" (2) http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+" (3) https://neovim.io/news/2022/04#filetypelua
