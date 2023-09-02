@@ -2,8 +2,17 @@
 	name = CHANGEME
 	email = CHANGEME
 [core]
-	editor = vim -f
+	editor = nvim
+	pager = delta
+[delta]
+	light = false
+	line-numbers = true
+	navigate = true # use n and N to move between diff sections
+[diff]
+	colorMoved = default
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictstyle = diff3
 [web]
 	browser = firefox
-[merge]
-	tool = meld
